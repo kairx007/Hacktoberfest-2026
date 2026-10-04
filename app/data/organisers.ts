@@ -5,8 +5,8 @@ export type Organiser = {
 };
 
 export const organisers: Organiser[] = [
-  { name: "Coming soon", image: "/kush.webp", alt: "Organiser" },
-  { name: "Coming soon", image: "/ayush.jpeg", alt: "Organiser" },
-  { name: "Coming soon", image: "/priyanshu.jpeg", alt: "Organiser" },
-  { name: "Coming soon", image: "/rd.jpeg", alt: "Organiser" },
+  { name: "Kushagra Arora", image: "/kush.webp", alt: "Kushagra Arora" },
+  { name: "Ayush Kumar Pal", image: "/ayush.jpeg", alt: "Ayush Kumar Pal" },
+  { name: "Priyanshu Mittal", image: "/priyanshu.jpeg", alt: "Priyanshu Mittal" },
+  { name: "Nitul Das", image: "/rd.jpeg", alt: "Nitul Das" },
 ];
