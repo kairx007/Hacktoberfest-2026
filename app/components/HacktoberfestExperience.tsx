@@ -8,18 +8,27 @@ export default function HacktoberfestExperience() {
   const [isOpen, setIsOpen] = useState(false);
   const [isCommitteeFlipped, setIsCommitteeFlipped] = useState(false);
   const panelRef = useRef<HTMLElement>(null);
-  const landingTouchStart = useRef<number | null>(null);
+  const touchStart = useRef<{ x: number; y: number; inPanel: boolean } | null>(null);
 
-  function handleLandingTouchStart(event: TouchEvent<HTMLElement>) {
-    landingTouchStart.current = event.touches[0]?.clientY ?? null;
+  function handleTouchStart(event: TouchEvent<HTMLElement>) {
+    const touch = event.touches[0];
+    if (!touch) return;
+    touchStart.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+      inPanel: event.target instanceof Element && Boolean(event.target.closest(".details-page")),
+    };
   }
 
-  function handleLandingTouchEnd(event: TouchEvent<HTMLElement>) {
-    const startY = landingTouchStart.current;
-    const endY = event.changedTouches[0]?.clientY;
-    landingTouchStart.current = null;
-    if (startY === null || endY === undefined || startY - endY < 40) return;
-    setIsOpen(true);
+  function handleTouchEnd(event: TouchEvent<HTMLElement>) {
+    const start = touchStart.current;
+    const touch = event.changedTouches[0];
+    touchStart.current = null;
+    if (!start || !touch || Math.abs(touch.clientY - start.y) < 50 || Math.abs(touch.clientY - start.y) < Math.abs(touch.clientX - start.x) * 1.2) return;
+
+    const swipedUp = touch.clientY < start.y;
+    if (!start.inPanel && swipedUp) setIsOpen(true);
+    if (start.inPanel && !swipedUp && panelRef.current?.scrollTop === 0) setIsOpen(false);
   }
 
   function handleWheel(event: WheelEvent<HTMLElement>) {
@@ -35,12 +44,10 @@ export default function HacktoberfestExperience() {
   }
 
   return (
-    <main className="landing-experience" onWheel={handleWheel}>
+    <main className="landing-experience" onWheel={handleWheel} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
       <section
         className={`landing-page${isOpen ? " is-open" : ""}`}
         aria-label="Zeroday OSS Hacktoberfest"
-        onTouchStart={handleLandingTouchStart}
-        onTouchEnd={handleLandingTouchEnd}
       >
         <picture>
           <source media="(max-width: 600px)" srcSet="/zeroday-landing-mobile.png" />

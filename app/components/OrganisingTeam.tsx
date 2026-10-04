@@ -23,7 +23,7 @@ export default function OrganisingTeam({ flipped, onFlip, onUnflip }: Organising
             </div>
             <div className="organiser-nameplate">
               <h3>Lead organiser</h3>
-              <p>Name coming soon</p>
+              <p>Ujwal Akotkar</p>
             </div>
           </article>
           <h3 className="organisers-label">Organisers</h3>
@@ -34,8 +34,7 @@ export default function OrganisingTeam({ flipped, onFlip, onUnflip }: Organising
                   <Image className="organiser-photo" src={organiser.image} alt={organiser.alt} width={900} height={900} sizes="(max-width: 600px) 40vw, 104px" />
                 </div>
                 <div className="organiser-nameplate">
-                  <h3>Organiser</h3>
-                  <p>{organiser.name}</p>
+                  <h3>{organiser.name}</h3>
                 </div>
               </article>
             ))}
