@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type WheelEvent } from "react";
+import { useRef, useState, type TouchEvent, type WheelEvent } from "react";
 import EventDetails from "./EventDetails";
 import OrganisingTeam from "./OrganisingTeam";
 
@@ -8,6 +8,19 @@ export default function HacktoberfestExperience() {
   const [isOpen, setIsOpen] = useState(false);
   const [isCommitteeFlipped, setIsCommitteeFlipped] = useState(false);
   const panelRef = useRef<HTMLElement>(null);
+  const landingTouchStart = useRef<number | null>(null);
+
+  function handleLandingTouchStart(event: TouchEvent<HTMLElement>) {
+    landingTouchStart.current = event.touches[0]?.clientY ?? null;
+  }
+
+  function handleLandingTouchEnd(event: TouchEvent<HTMLElement>) {
+    const startY = landingTouchStart.current;
+    const endY = event.changedTouches[0]?.clientY;
+    landingTouchStart.current = null;
+    if (startY === null || endY === undefined || startY - endY < 40) return;
+    setIsOpen(true);
+  }
 
   function handleWheel(event: WheelEvent<HTMLElement>) {
     const panel = panelRef.current;
@@ -23,7 +36,12 @@ export default function HacktoberfestExperience() {
 
   return (
     <main className="landing-experience" onWheel={handleWheel}>
-      <section className={`landing-page${isOpen ? " is-open" : ""}`} aria-label="Zeroday OSS Hacktoberfest">
+      <section
+        className={`landing-page${isOpen ? " is-open" : ""}`}
+        aria-label="Zeroday OSS Hacktoberfest"
+        onTouchStart={handleLandingTouchStart}
+        onTouchEnd={handleLandingTouchEnd}
+      >
         <picture>
           <source media="(max-width: 600px)" srcSet="/zeroday-landing-mobile.png" />
           <img src="/zeroday-landing.webp" alt="Zeroday OSS Hacktoberfest Dharwad 2026" className="landing-banner" />
