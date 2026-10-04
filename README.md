@@ -1,36 +1,42 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Zeroday OSS Hacktoberfest — Dharwad 2026
 
-## Getting Started
+The event landing page for Zeroday OSS Hacktoberfest in Dharwad. It presents event registration and sponsor information, the organising team, and participating organisations.
 
-First, run the development server:
+## Run locally
+
+Requirements: Node.js 20 or later and npm.
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```text
+app/
+  components/       Landing experience, event details, organising team
+  data/             Organiser content
+  globals.css       Shared and responsive styles
+  layout.tsx        Root document and metadata
+  page.tsx          Route entry point
+public/             Event artwork, portraits, sponsor and organisation logos
+```
 
-## Learn More
+## Common commands
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` — start the local development server
+- `npm run lint` — run ESLint
+- `npm run build` — create a production build
+- `npm start` — serve the production build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Updating event content
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Update organiser names and portraits in `app/data/organisers.ts`.
+- Event date, registration links, community link, and sponsor content are in `app/components/EventDetails.tsx`.
+- Organisation logos are in `app/components/OrganisingTeam.tsx`; place image assets in `public/` and reference them with root-relative paths such as `/logo.png`.
+- Use descriptive alt text for meaningful images. Keep decorative effects in CSS rather than adding redundant image descriptions.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidance.
